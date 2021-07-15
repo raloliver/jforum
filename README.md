@@ -24,6 +24,7 @@
 - `@GeneratedValue`: possui o atributo `strategy` onde deve ser informado se é `IDENTITY` para auto-increment ou `SEQUENCE`, exemplo: `@GeneratedValue(strategy = GenerationType.IDENTITY)`.
 - `@Enumerated`: por padrão os atributos do tipo `Enum` são guardados de maneira ordenada no banco de dados, para evitar isso, você pode customizar, exemplo: `@Enumerated(EnumType.STRING)`.
 - Cardinalidades: `@ManyToOne` e `@OneToMany`. No caso do segundo exemplo, é necessário informar o tipo de mapeado, exemplo: `@OneToMany(mappedBy = "topic")`, onde "topic" é o nome do atributo da classe que estou anotando.
+- `@Autowired` necessário para realizar injeção de dependência.
 ### JPA
 
 - **JPA**: especificação do Java para banco de dados.
@@ -31,7 +32,8 @@
 - H2: banco de dados em memória. A partir do arquivo **application.properties** é possível configurar o acesso ao painel admin do H2, onde é necessario apontar no campo **JDBC URL** a url do datasource (atenção ao username e password).
 - **application.properties**: arquivo necessário para configuração do datasource, jpa e do banco de dados escolhido. Nesse arquivo devem ser declaradas as configurações da aplicação, inclusive as relacionadas ao banco de dados dela.
 - Arquivo **data.sql** em resources: o SB gera automaticamente esses dados no banco de dados como arquivos de inicialização (no exemplo do projeto utilizamos um banco de dados em mémoria, que sempre perde os dados após reiniciado o projeto). A partir da versão 2.5 do SB, é necessário adicionar uma propriedade no arquivo **application.properties** `spring.jpa.defer-datasource-initialization=true`.
-
+- Para acessar os dados do banco de dados, é possível adicionar ao *controller* o `EntityManager` e fazer a consulta diretamente, mas isso não é uma boa prática. Geralmente isolamos em uma outra classe e injetamos ela no *controller*, utilizando **DAO** por exemplo. Mas para o SB, o recomendado é utilizado o padrão **Repository**, a partir da criação de uma interface (e não de uma classe) que *extends* métodos e atributos que custumam ser padrões desse tipo de trabalho. A interface `JpaRepository` exige que todas as classes modelos que a utilizem, possuam um construtor padrão que não receba parâmetros.
+- **Interface**: não é necessário anotar interfaces ao utilizar SB, pois o mesmo encontra elas diretamente.
 
 ### NEXT
 
