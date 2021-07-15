@@ -20,8 +20,20 @@
 ### ANNOTATIONS
 
 - `@ResponseBody`: Por padrão, o Spring considera que o retorno do método é o nome da página que ele deve carregar, mas ao utilizar a anotação `@ResponseBody`, indicamos que o retorno do método deve ser serializado e devolvido no corpo da resposta. Para evitar a repetição dessa anotação, podemos usar como anotação principal da classe, o `@RestController`.
+- `@Entity`: toda entidade (modelo) deve ser anotada dessa maneira, pois as mesmas são as classes de domínio que representam as tabelas no banco de dados. Com essa anotação, a criação da tabela ocorre de forma automatica.
+- `@GeneratedValue`: possui o atributo `strategy` onde deve ser informado se é `IDENTITY` para auto-increment ou `SEQUENCE`, exemplo: `@GeneratedValue(strategy = GenerationType.IDENTITY)`.
+- `@Enumerated`: por padrão os atributos do tipo `Enum` são guardados de maneira ordenada no banco de dados, para evitar isso, você pode customizar, exemplo: `@Enumerated(EnumType.STRING)`.
+- Cardinalidades: `@ManyToOne` e `@OneToMany`. No caso do segundo exemplo, é necessário informar o tipo de mapeado, exemplo: `@OneToMany(mappedBy = "topic")`, onde "topic" é o nome do atributo da classe que estou anotando.
+### JPA
+
+- **JPA**: especificação do Java para banco de dados.
+- `spring-boot-starter-data-jpa`
+- H2: banco de dados em memória. A partir do arquivo **application.properties** é possível configurar o acesso ao painel admin do H2, onde é necessario apontar no campo **JDBC URL** a url do datasource (atenção ao username e password).
+- **application.properties**: arquivo necessário para configuração do datasource, jpa e do banco de dados escolhido. Nesse arquivo devem ser declaradas as configurações da aplicação, inclusive as relacionadas ao banco de dados dela.
+- Arquivo **data.sql** em resources: o SB gera automaticamente esses dados no banco de dados como arquivos de inicialização (no exemplo do projeto utilizamos um banco de dados em mémoria, que sempre perde os dados após reiniciado o projeto). A partir da versão 2.5 do SB, é necessário adicionar uma propriedade no arquivo **application.properties** `spring.jpa.defer-datasource-initialization=true`.
 
 
 ### NEXT
 
 - API de stream do Java 8
+- JPA
