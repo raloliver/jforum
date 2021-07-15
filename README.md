@@ -13,6 +13,8 @@
 - **Jackson**: biblioteca responsável por converter as respostas de um lista para o formato JSON (stringfy)
 - `spring-boot-devtools`: dependencia responsavel por evitar o rebuild da app a cada alteração. Lembre-se de adicionar o `scope` como `runtime`; O módulo DevTools inclui ferramentas utilitárias no projeto, dentre elas a Automatic Restart, que reinicia o servidor automaticamente ao detectar alterações no código fonte da aplicação.
 - DTO (Data Transfer Object): muito utilizado para retornar apenas os valores específicos e não todos os atributos da classe modelo. Geralmente para este tipo de classe, usamos apenas *getters* e um "constructor".
+- REST: Representational State Transfer. Quais **recursos** serão gerenciadas no sistema? Você pode utilizar uma as **URI** para identificar esses recursos e para manipular essas informações, é necessário utilizarmos os **verbos HTTP** e por fim, a API recebe e devolve **representações dos recursos** (que são feitas através dos **medias types**)
+- Comunicação Stateless: as apps não guardam o state do lado do servidor (sessions).
 
 
 ### ANNOTATIONS
