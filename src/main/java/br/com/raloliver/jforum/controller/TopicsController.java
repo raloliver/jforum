@@ -17,9 +17,17 @@ public class TopicsController {
     private TopicRepository topicRepository;
 
     @RequestMapping("/topics")
-    public List<TopicDto> getAll() {
-        List<Topic> topics = topicRepository.findAll();
+    public List<TopicDto> getAll(String course) {
 
-        return TopicDto.mapper(topics);
+        if (course == null) {
+            List<Topic> topics = topicRepository.findAll();
+
+            return TopicDto.mapper(topics);
+        } else {
+            List<Topic> topics = topicRepository.findByCourse_Name(course);
+
+            return TopicDto.mapper(topics);
+        }
+
     }
 }
