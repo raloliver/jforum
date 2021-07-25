@@ -25,6 +25,12 @@
 - `@Enumerated`: por padrão os atributos do tipo `Enum` são guardados de maneira ordenada no banco de dados, para evitar isso, você pode customizar, exemplo: `@Enumerated(EnumType.STRING)`.
 - Cardinalidades: `@ManyToOne` e `@OneToMany`. No caso do segundo exemplo, é necessário informar o tipo de mapeado, exemplo: `@OneToMany(mappedBy = "topic")`, onde "topic" é o nome do atributo da classe que estou anotando.
 - `@Autowired` necessário para realizar injeção de dependência.
+- `@Query` utilizada para realizar consultas ao banco de dados, que recebe como valor um query escrita em JPSQL, exemplo: 
+```
+@Query("SELECT t from Topic t WHERE t.course.title = :course")
+List<Topic> loadByTitleCourse(@Param("course") String course);
+```
+
 ### JPA
 
 - **JPA**: especificação do Java para banco de dados.
@@ -34,6 +40,9 @@
 - Arquivo **data.sql** em resources: o SB gera automaticamente esses dados no banco de dados como arquivos de inicialização (no exemplo do projeto utilizamos um banco de dados em mémoria, que sempre perde os dados após reiniciado o projeto). A partir da versão 2.5 do SB, é necessário adicionar uma propriedade no arquivo **application.properties** `spring.jpa.defer-datasource-initialization=true`.
 - Para acessar os dados do banco de dados, é possível adicionar ao *controller* o `EntityManager` e fazer a consulta diretamente, mas isso não é uma boa prática. Geralmente isolamos em uma outra classe e injetamos ela no *controller*, utilizando **DAO** por exemplo. Mas para o SB, o recomendado é utilizado o padrão **Repository**, a partir da criação de uma interface (e não de uma classe) que *extends* métodos e atributos que custumam ser padrões desse tipo de trabalho. A interface `JpaRepository` exige que todas as classes modelos que a utilizem, possuam um construtor padrão que não receba parâmetros.
 - **Interface**: não é necessário anotar interfaces ao utilizar SB, pois o mesmo encontra elas diretamente.
+- **Filtros**: É possível realizar filtros com `query params` ao passar o nome da query como parâmetro do método principal.
+- O Spring Data JPA possui um padrão de nomenclatura, ao seguirmos esse padrão de nomeclatura, é possível gerar uma query automaticamente, exemplo: `findByCourseTitle(course)` (lembre-se de adicionar este método ao repositório), com isso o Spring Data JPA gera a query automaticamente sem a necessidade de criarmos a query de consulta com JPSQL (**A busca é feita estritamente pelo nome exato da pesquisa**). Caso existam entidades/atributos com o mesmo padrão de nomenclatura, deve-se utilizar o _, exemplo `findByCourse_Title(course)`. Esse separador habilita a pesquisa para em profundidade, sempre por entidade e atributos.
+
 
 ### NEXT
 
