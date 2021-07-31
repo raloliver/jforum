@@ -1,22 +1,33 @@
 package br.com.raloliver.jforum.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.raloliver.jforum.controller.dto.TopicDto;
-import br.com.raloliver.jforum.model.Course;
 import br.com.raloliver.jforum.model.Topic;
+import br.com.raloliver.jforum.repository.TopicRepository;
 
 @RestController
 public class TopicsController {
 
-    @RequestMapping("/topics")
-    public List<TopicDto> getAll() {
-        Topic topic = new Topic("Dúvida", "Erro Typescript", new Course("Angular", "Front-end"));
+    @Autowired
+    private TopicRepository topicRepository;
 
-        return TopicDto.mapper(Arrays.asList(topic, topic, topic));
+    @RequestMapping("/topics")
+    public List<TopicDto> getAll(String course) {
+
+        if (course == null) {
+            List<Topic> topics = topicRepository.findAll();
+
+            return TopicDto.mapper(topics);
+        } else {
+            List<Topic> topics = topicRepository.findByCourse_Name(course);
+
+            return TopicDto.mapper(topics);
+        }
+
     }
 }
