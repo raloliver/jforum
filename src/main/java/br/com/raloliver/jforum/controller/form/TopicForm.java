@@ -1,13 +1,28 @@
 package br.com.raloliver.jforum.controller.form;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
 import br.com.raloliver.jforum.model.Course;
 import br.com.raloliver.jforum.model.Topic;
 import br.com.raloliver.jforum.repository.CourseRepository;
 
 public class TopicForm {
 
+    @NotNull
+    @NotEmpty
+    @Length(min = 5)
     private String title;
+
+    @NotNull
+    @NotEmpty
+    @Length(min = 50)
     private String message;
+
+    @NotNull
+    @NotEmpty
     private String courseName;
 
     public String getTitle() {

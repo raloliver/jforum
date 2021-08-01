@@ -47,6 +47,17 @@ List<Topic> loadByTitleCourse(@Param("course") String course);
 - O Spring Data JPA possui um padrão de nomenclatura, ao seguirmos esse padrão de nomeclatura, é possível gerar uma query automaticamente, exemplo: `findByCourseTitle(course)` (lembre-se de adicionar este método ao repositório), com isso o Spring Data JPA gera a query automaticamente sem a necessidade de criarmos a query de consulta com JPSQL (**A busca é feita estritamente pelo nome exato da pesquisa**). Caso existam entidades/atributos com o mesmo padrão de nomenclatura, deve-se utilizar o _, exemplo `findByCourse_Title(course)`. Esse `_` é o separador de atributo, que representa o relacionamento, do nome do atributo a ser filtrado.
 
 
+### BEAN VALIDATION
+
+É uma especificação do Java e existe para fazer validações de formulários, de campo obrigatório, tamanho mínimo, tamanho máximo, letra, número e etc.
+
+Alguma annotations para validação de campos:
+    - `@NotNull`
+    - `@NotEmpty`
+    - `@Length(min = 5)`
+
+O Bean Validation é flexível. É possível criar novas anotações. Por exemplo, você quer validar um campo CPF. Você pode criar uma anotação `@CPF` e escrever o código para a mesma.
+
 ### NEXT
 
 - Java 8
