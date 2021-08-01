@@ -53,6 +53,8 @@ public class TopicsController {
      * A URI devolve no cabeçalho (location) da resposta a url para requisição dos
      * detalhes do dado que foi inserido no banco de dados.
      * 
+     * @Valid: Indicar ao SB que as validações devem ser executadas a partir do Bean
+     *         Validation.
      * @param form
      */
     @PostMapping
