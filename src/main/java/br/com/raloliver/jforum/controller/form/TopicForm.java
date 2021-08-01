@@ -13,12 +13,12 @@ public class TopicForm {
 
     @NotNull
     @NotEmpty
-    @Length(min = 5)
+    @Length(min = 5, max = 160)
     private String title;
 
     @NotNull
     @NotEmpty
-    @Length(min = 50)
+    @Length(min = 50, max = 3000)
     private String message;
 
     @NotNull

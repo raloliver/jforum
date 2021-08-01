@@ -33,6 +33,8 @@ List<Topic> loadByTitleCourse(@Param("course") String course);
 - `@RequestMapping("/topics")`: deve ser adicionada logo abaixo da anotação `@RestController`, para evitar de passar o value/method nos métodos da classe. Com isso, podemos adicionar em cada método, a anotação referente ao verbo HTTP, exemplo: `@GetMapping`, `@PostMapping`.
 - `@RequestBody`: diz so SB para buscar os dados como corpo da requisição e não nos parâmetros da URL. Indica ao SB que os parâmetros enviados no corpo da requisição devem ser atribuídos ao parâmetro do método.
 - `@Valid`: Indicar ao SB que as validações devem ser executadas a partir do Bean Validation.
+- `@RestControllerAdvice`: funciona como um *interceptor* onde é possível criar por exemplo, customizações para respostas de validações.
+- `@ExceptionHandler()`: anotação para determinar qual método será executado quando ocorrer uma  *execption* em qualquer RestController.
 
 ### JPA
 
