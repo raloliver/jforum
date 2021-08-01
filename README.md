@@ -31,7 +31,8 @@
 List<Topic> loadByTitleCourse(@Param("course") String course);
 ```
 - `@RequestMapping("/topics")`: deve ser adicionada logo abaixo da anotação `@RestController`, para evitar de passar o value/method nos métodos da classe. Com isso, podemos adicionar em cada método, a anotação referente ao verbo HTTP, exemplo: `@GetMapping`, `@PostMapping`.
-- `@RequestBody`: diz so SB para buscar os dados como corpo da requisição e não nos parâmetros da URL
+- `@RequestBody`: diz so SB para buscar os dados como corpo da requisição e não nos parâmetros da URL. Indica ao SB que os parâmetros enviados no corpo da requisição devem ser atribuídos ao parâmetro do método.
+- `ResponseEntity<T>`: recebe um generic. Esse generic é o tipo de objeto que vou devolver no corpo da resposta. Com essa classe, utilizamos o método `created` que recebe a uri como valor (que devolve o valor da URI no cabeçalho da resposta ao POST), e em seguida retorna no `body` o dado que foi inserido no banco. Exemplo: `ResponseEntity.created(uri).body(new TopicDto(topic))`. Caso algum método em uma classe Controller não tiver retorno, ou seja, se ele tiver retorno void O SB devolverá o código 200, caso a requisição seja processada com sucesso.
 
 ### JPA
 

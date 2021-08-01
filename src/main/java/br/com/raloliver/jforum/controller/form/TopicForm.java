@@ -36,6 +36,7 @@ public class TopicForm {
 
     public Topic mapper(CourseRepository courseRepository) {
         Course course = courseRepository.findByName(courseName);
+
         return new Topic(title, message, course);
     }
 
