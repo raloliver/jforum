@@ -48,8 +48,8 @@ public class TopicsController {
      * É necessário converter o objeto topic(form) para topic. O ideal é devolver o
      * código 201 (created).
      * 
-     * A URI devolve no cabeçalho da resposta a url para requisição dos detalhes do
-     * dado que foi inserido no banco de dados.
+     * A URI devolve no cabeçalho (location) da resposta a url para requisição dos
+     * detalhes do dado que foi inserido no banco de dados.
      * 
      * @param form
      */
