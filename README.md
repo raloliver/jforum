@@ -32,7 +32,9 @@ List<Topic> loadByTitleCourse(@Param("course") String course);
 ```
 - `@RequestMapping("/topics")`: deve ser adicionada logo abaixo da anotação `@RestController`, para evitar de passar o value/method nos métodos da classe. Com isso, podemos adicionar em cada método, a anotação referente ao verbo HTTP, exemplo: `@GetMapping`, `@PostMapping`.
 - `@RequestBody`: diz so SB para buscar os dados como corpo da requisição e não nos parâmetros da URL. Indica ao SB que os parâmetros enviados no corpo da requisição devem ser atribuídos ao parâmetro do método.
-- `ResponseEntity<T>`: recebe um generic. Esse generic é o tipo de objeto que vou devolver no corpo da resposta. Com essa classe, utilizamos o método `created` que recebe a uri como valor (que devolve o valor da URI no cabeçalho da resposta ao POST), e em seguida retorna no `body` o dado que foi inserido no banco. Exemplo: `ResponseEntity.created(uri).body(new TopicDto(topic))`. Caso algum método em uma classe Controller não tiver retorno, ou seja, se ele tiver retorno void O SB devolverá o código 200, caso a requisição seja processada com sucesso.
+- `@Valid`: Indicar ao SB que as validações devem ser executadas a partir do Bean Validation.
+- `@RestControllerAdvice`: funciona como um *interceptor* onde é possível criar por exemplo, customizações para respostas de validações.
+- `@ExceptionHandler()`: anotação para determinar qual método será executado quando ocorrer uma  *execption* em qualquer RestController.
 
 ### JPA
 
@@ -46,6 +48,20 @@ List<Topic> loadByTitleCourse(@Param("course") String course);
 - **Filtros**: É possível realizar filtros com `query params` ao passar o nome da query como parâmetro do método principal.
 - O Spring Data JPA possui um padrão de nomenclatura, ao seguirmos esse padrão de nomeclatura, é possível gerar uma query automaticamente, exemplo: `findByCourseTitle(course)` (lembre-se de adicionar este método ao repositório), com isso o Spring Data JPA gera a query automaticamente sem a necessidade de criarmos a query de consulta com JPSQL (**A busca é feita estritamente pelo nome exato da pesquisa**). Caso existam entidades/atributos com o mesmo padrão de nomenclatura, deve-se utilizar o _, exemplo `findByCourse_Title(course)`. Esse `_` é o separador de atributo, que representa o relacionamento, do nome do atributo a ser filtrado.
 
+### SIMPLE POST
+
+- `ResponseEntity<T>`: recebe um generic. Esse generic é o tipo de objeto que vou devolver no corpo da resposta. Com essa classe, utilizamos o método `created` que recebe a uri como valor (que devolve o valor da URI no cabeçalho da resposta ao POST), e em seguida retorna no `body` o dado que foi inserido no banco. Exemplo: `ResponseEntity.created(uri).body(new TopicDto(topic))`. Caso algum método em uma classe Controller não tiver retorno, ou seja, se ele tiver retorno void O SB devolverá o código 200, caso a requisição seja processada com sucesso.
+
+### BEAN VALIDATION
+
+É uma especificação do Java e existe para fazer validações de formulários, de campo obrigatório, tamanho mínimo, tamanho máximo, letra, número e etc.
+
+Alguma annotations para validação de campos:
+    - `@NotNull`
+    - `@NotEmpty`
+    - `@Length(min = 5)`
+
+O Bean Validation é flexível. É possível criar novas anotações. Por exemplo, você quer validar um campo CPF. Você pode criar uma anotação `@CPF` e escrever o código para a mesma.
 
 ### NEXT
 
