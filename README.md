@@ -30,6 +30,8 @@
 @Query("SELECT t from Topic t WHERE t.course.title = :course")
 List<Topic> loadByTitleCourse(@Param("course") String course);
 ```
+- `@RequestMapping("/topics")`: deve ser adicionada logo abaixo da anotação `@RestController`, para evitar de passar o value/method nos métodos da classe. Com isso, podemos adicionar em cada método, a anotação referente ao verbo HTTP, exemplo: `@GetMapping`, `@PostMapping`.
+- `@RequestBody`: diz so SB para buscar os dados como corpo da requisição e não nos parâmetros da URL
 
 ### JPA
 
@@ -46,5 +48,6 @@ List<Topic> loadByTitleCourse(@Param("course") String course);
 
 ### NEXT
 
-- API de stream do Java 8
+- Java 8
 - JPA
+- DTO
