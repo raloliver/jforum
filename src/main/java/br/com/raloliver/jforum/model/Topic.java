@@ -31,6 +31,20 @@ public class Topic {
 	@OneToMany(mappedBy = "topic")
 	private List<Reply> replies = new ArrayList<>();
 
+	/**
+	 * É possível que uma classe tenha mais de um construtor o default e algum outro
+	 * com atributos específicos Ao invocar o construtor, é necessário declarar nos
+	 * argumentos, quais atributos deseja utilizar
+	 */
+	public Topic() {
+	}
+
+	public Topic(String title, String message, Course course) {
+		this.title = title;
+		this.message = message;
+		this.course = course;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
