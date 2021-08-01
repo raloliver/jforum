@@ -3,6 +3,8 @@ package br.com.raloliver.jforum.controller;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,10 +53,12 @@ public class TopicsController {
      * A URI devolve no cabeçalho (location) da resposta a url para requisição dos
      * detalhes do dado que foi inserido no banco de dados.
      * 
+     * @Valid: Indicar ao SB que as validações devem ser executadas a partir do Bean
+     *         Validation.
      * @param form
      */
     @PostMapping
-    public ResponseEntity<TopicDto> add(@RequestBody TopicForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<TopicDto> add(@RequestBody @Valid TopicForm form, UriComponentsBuilder uriBuilder) {
         Topic topic = form.mapper(courseRepository);
         topicRepository.save(topic);
 
