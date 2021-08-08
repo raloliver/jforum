@@ -3,6 +3,7 @@ package br.com.raloliver.jforum.controller;
 import java.net.URI;
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.raloliver.jforum.controller.dto.DetailsTopicDto;
 import br.com.raloliver.jforum.controller.dto.TopicDto;
 import br.com.raloliver.jforum.controller.form.TopicForm;
+import br.com.raloliver.jforum.controller.form.TopicFormUpdate;
 import br.com.raloliver.jforum.model.Topic;
 import br.com.raloliver.jforum.repository.CourseRepository;
 import br.com.raloliver.jforum.repository.TopicRepository;
@@ -84,6 +87,31 @@ public class TopicsController {
         // Ao instanciar um novo TopicoDto posso passar um tópico como parâmetro, onde o
         // mesmo será convertido para um DTO.
         return new DetailsTopicDto(topic);
+    }
+
+    /**
+     * Mesmo sendo PUT, diferente do que fazemos no cadastro (TopicForm), nem sempre
+     * podemos atualizar todos os campos. O ideal seria ter outra classe Form que
+     * representa a atualização.
+     * 
+     * Para atualizar no banco de dados, não precisamos chamar nenhum método do
+     * Repository, porque a partir do momento em que carreguei ele do banco de dados
+     * pelo id, pela JPA ele já está sendo gerenciado. Qualquer atributo que eu
+     * setar, no final do méotodo, o Spring roda dentro de uma transação. Então eu
+     * vou carregar o tópico do banco de dados, no final do método ele vai commitar
+     * a transação, a JPA vai detectar que foram alterados os atributos e ela vai
+     * disparar o update no banco de dados automaticamente, não preciso chamar.
+     * 
+     * @param id
+     * @param form
+     * @return
+     */
+    @PutMapping("/{id}")
+    @Transactional  
+    public ResponseEntity<TopicDto> update(@PathVariable Long id, @RequestBody @Valid TopicFormUpdate form) {
+        Topic topic = form.update(id, topicRepository);
+
+        return ResponseEntity.ok(new TopicDto(topic));
     }
 
 }
