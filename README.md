@@ -63,6 +63,10 @@ Alguma annotations para validação de campos:
 
 O Bean Validation é flexível. É possível criar novas anotações. Por exemplo, você quer validar um campo CPF. Você pode criar uma anotação `@CPF` e escrever o código para a mesma.
 
+### SIMPLE UPDATE
+
+
+
 ### NEXT
 
 - Java 8

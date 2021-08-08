@@ -8,12 +8,14 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.raloliver.jforum.controller.dto.DetailsTopicDto;
 import br.com.raloliver.jforum.controller.dto.TopicDto;
 import br.com.raloliver.jforum.controller.form.TopicForm;
 import br.com.raloliver.jforum.model.Topic;
@@ -65,6 +67,23 @@ public class TopicsController {
         URI uri = uriBuilder.path("topics/{id}").buildAndExpand(topic.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new TopicDto(topic));
+    }
+
+    /**
+     * Como o valor do @GetMapping é o mesmo do Long no método details, o SB entende
+     * que um diz respeito ao outro, porém, se forem diferentes, é necessário passar
+     * um valor no @PathVariable.
+     * 
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public DetailsTopicDto details(@PathVariable Long id) {
+        Topic topic = topicRepository.getById(id);
+
+        // Ao instanciar um novo TopicoDto posso passar um tópico como parâmetro, onde o
+        // mesmo será convertido para um DTO.
+        return new DetailsTopicDto(topic);
     }
 
 }
