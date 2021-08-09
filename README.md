@@ -35,6 +35,11 @@ List<Topic> loadByTitleCourse(@Param("course") String course);
 - `@Valid`: Indicar ao SB que as validações devem ser executadas a partir do Bean Validation.
 - `@RestControllerAdvice`: funciona como um *interceptor* onde é possível criar por exemplo, customizações para respostas de validações.
 - `@ExceptionHandler()`: anotação para determinar qual método será executado quando ocorrer uma  *execption* em qualquer RestController.
+- `@Transactional`: avisar para o Spring que é para commitar a transação no final do método. Efetuar o `commit` automático da transação, caso não ocorra uma exception. Executar o método dentro de um contexto transacional. O ideal é que todos os métodos que realizem alterações no banco de dados, sejam anotados com essa anotação.
+- `@PostMapping`: para realizar cadastros no banco de dados através do verbo HTTP POST.
+- `@GetMapping`: para realizar consulta no banco de dados através do verbo HTTP POST. Também é possível receber um valor para consultar um dado único, exemplo: `@GetMapping("/{id}")`.
+- `@PutMapping("/{id}")`: para realizar alterações no banco de dados através do verbo HTTP PUT. Geralmente devemos informar qual recurso desejamos alterar, e isso é feito através do parâmetro passado na anotação.
+
 
 ### JPA
 
@@ -62,6 +67,17 @@ Alguma annotations para validação de campos:
     - `@Length(min = 5)`
 
 O Bean Validation é flexível. É possível criar novas anotações. Por exemplo, você quer validar um campo CPF. Você pode criar uma anotação `@CPF` e escrever o código para a mesma.
+
+### SIMPLE UPDATE
+
+**PUT** x **PATCH**: ambos tem a ideia de atualização, PUT para sobrescrever o recurso. Isto é, quero atualizar todas as informações e sobreescrever o recurso inteiro. PATCH para fazer apenas um pequeno "patch", uma pequena atualização - quando quero mudar só alguns campos.
+
+### ERROR HANDLE
+
+Devemos evitar que a exception seja devolvida para o cliente no corpo da resposta. Não é interessante devolver exceptions e stack traces para os clientes, em casos de erros na API Rest.
+
+`findById`: Recebe um id e faz a consulta ao DB a partir dele, se não encontrar, não joga exception.
+_Optional_: Como o próprio nome já diz, o Optional é opcional. Tenho que verificar se nesse Optional tem um registro. Se não tiver, devolvo "404". 
 
 ### NEXT
 
