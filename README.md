@@ -72,6 +72,11 @@ O Bean Validation é flexível. É possível criar novas anotações. Por exempl
 
 **PUT** x **PATCH**: ambos tem a ideia de atualização, PUT para sobrescrever o recurso. Isto é, quero atualizar todas as informações e sobreescrever o recurso inteiro. PATCH para fazer apenas um pequeno "patch", uma pequena atualização - quando quero mudar só alguns campos.
 
+### ERROR HANDLE
+
+`findById`: Recebe um id e faz a consulta ao DB a partir dele, se não encontrar, não joga exception.
+_Optional_: Como o próprio nome já diz, o Optional é opcional. Tenho que verificar se nesse Optional tem um registro. Se não tiver, devolvo "404". 
+
 ### NEXT
 
 - Java 8

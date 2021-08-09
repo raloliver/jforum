@@ -2,6 +2,7 @@ package br.com.raloliver.jforum.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -79,16 +80,26 @@ public class TopicsController {
      * que um diz respeito ao outro, porém, se forem diferentes, é necessário passar
      * um valor no @PathVariable.
      * 
+     * .isPresent() se existir um registro de fato presente, vou retornar um new
+     * DetalhesDoTopicoDto(topico), passando como parâmetro topico.
+     * 
+     * É necessário chamar o método get(), que é para pegar o topico de fato que
+     * está dentro do Optional.
+     * 
      * @param id
      * @return
      */
     @GetMapping("/{id}")
-    public DetailsTopicDto details(@PathVariable Long id) {
-        Topic topic = topicRepository.getById(id);
+    public ResponseEntity<DetailsTopicDto> details(@PathVariable Long id) {
+        Optional<Topic> topic = topicRepository.findById(id);
 
         // Ao instanciar um novo TopicoDto posso passar um tópico como parâmetro, onde o
         // mesmo será convertido para um DTO.
-        return new DetailsTopicDto(topic);
+        if (topic.isPresent()) {
+            return ResponseEntity.ok(new DetailsTopicDto(topic.get()));
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     /**
@@ -111,9 +122,15 @@ public class TopicsController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<TopicDto> update(@PathVariable Long id, @RequestBody @Valid TopicFormUpdate form) {
-        Topic topic = form.update(id, topicRepository);
+        Optional<Topic> optional = topicRepository.findById(id);
 
-        return ResponseEntity.ok(new TopicDto(topic));
+        if (optional.isPresent()) {
+            Topic topic = form.update(id, topicRepository);
+
+            return ResponseEntity.ok(new TopicDto(topic));
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     /**
@@ -125,9 +142,15 @@ public class TopicsController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> remove(@PathVariable Long id) {
-        topicRepository.deleteById(id);
+        Optional<Topic> optional = topicRepository.findById(id);
 
-        return ResponseEntity.ok().build();
+        if (optional.isPresent()) {
+            topicRepository.deleteById(id);
+
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
 }
