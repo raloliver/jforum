@@ -74,6 +74,8 @@ O Bean Validation é flexível. É possível criar novas anotações. Por exempl
 
 ### ERROR HANDLE
 
+Devemos evitar que a exception seja devolvida para o cliente no corpo da resposta. Não é interessante devolver exceptions e stack traces para os clientes, em casos de erros na API Rest.
+
 `findById`: Recebe um id e faz a consulta ao DB a partir dele, se não encontrar, não joga exception.
 _Optional_: Como o próprio nome já diz, o Optional é opcional. Tenho que verificar se nesse Optional tem um registro. Se não tiver, devolvo "404". 
 
