@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+
 import br.com.raloliver.jforum.model.Topic;
 
 public class TopicDto {
@@ -38,13 +40,18 @@ public class TopicDto {
 
     /**
      * Com a API de stream do Java 8 é possível mapear Topic para TopicDto em apenas
-     * uma linha
+     * uma linha.
+     * 
+     * Ao incluir a paginação é necessário trocar o tipo para Page, e ao inves de
+     * usar a stream API, utilizamos o método map de page, que é muito similar e
+     * mais abstrato.
      * 
      * @param topics
      * @return
      */
-    public static List<TopicDto> mapper(List<Topic> topics) {
-        return topics.stream().map(TopicDto::new).collect(Collectors.toList());
+    public static Page<TopicDto> mapper(Page<Topic> topics) {
+        // return topics.stream().map(TopicDto::new).collect(Collectors.toList());
+        return topics.map(TopicDto::new);
     }
 
 }

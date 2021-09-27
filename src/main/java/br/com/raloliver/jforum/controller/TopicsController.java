@@ -6,11 +6,15 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -30,16 +34,28 @@ public class TopicsController {
     @Autowired
     private CourseRepository courseRepository;
 
-    // @RequestMapping(value = "/topics", method = RequestMethod.GET)
+    /**
+     * @RequestMapping: (value = "/topics", method = RequestMethod.GET)
+     * @RequestParam: caso não seja informado o parâmetro na requisição, receberemos
+     *                uma exception, por isso o required = false.
+     * @param courseName
+     * @param page
+     * @param quantity
+     * @return
+     */
+    //
     @GetMapping
-    public List<TopicDto> getAll(String courseName) {
+    public Page<TopicDto> getAll(@RequestParam(required = false) String courseName, @RequestParam int page,
+            @RequestParam int quantity) {
+
+        Pageable pagination = PageRequest.of(page, quantity);
 
         if (courseName == null) {
-            List<Topic> topics = topicRepository.findAll();
+            Page<Topic> topics = topicRepository.findAll(pagination);
 
             return TopicDto.mapper(topics);
         } else {
-            List<Topic> topics = topicRepository.findByCourse_Name(courseName);
+            Page<Topic> topics = topicRepository.findByCourse_Name(courseName, pagination);
 
             return TopicDto.mapper(topics);
         }
