@@ -126,11 +126,11 @@ public class Topic {
 		this.course = course;
 	}
 
-	public List<Reply> getReply() {
+	public List<Reply> getReplies() {
 		return replies;
 	}
 
-	public void setReply(List<Reply> replies) {
+	public void setReplies(List<Reply> replies) {
 		this.replies = replies;
 	}
 
