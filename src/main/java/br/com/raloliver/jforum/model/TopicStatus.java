@@ -1,7 +1,8 @@
 package br.com.raloliver.jforum.model;
 
 public enum TopicStatus {
-
-	UNREPLY, UNSOLVED, SOLVED, CLOSED;
-
+  UNREPLY,
+  UNSOLVED,
+  SOLVED,
+  CLOSED,
 }

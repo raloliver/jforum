@@ -3,7 +3,6 @@ package br.com.raloliver.jforum.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,122 +15,120 @@ import javax.persistence.OneToMany;
 @Entity
 public class Topic {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String title;
-	private String message;
-	private LocalDateTime dateCreation = LocalDateTime.now();
-	@Enumerated(EnumType.STRING)
-	private TopicStatus status = TopicStatus.UNREPLY;
-	@ManyToOne
-	private User author;
-	@ManyToOne
-	private Course course;
-	@OneToMany(mappedBy = "topic")
-	private List<Reply> replies = new ArrayList<>();
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-	/**
-	 * É possível que uma classe tenha mais de um construtor o default e algum outro
-	 * com atributos específicos Ao invocar o construtor, é necessário declarar nos
-	 * argumentos, quais atributos deseja utilizar
-	 */
-	public Topic() {
-	}
+  private String title;
+  private String message;
+  private LocalDateTime dateCreation = LocalDateTime.now();
 
-	public Topic(String title, String message, Course course) {
-		this.title = title;
-		this.message = message;
-		this.course = course;
-	}
+  @Enumerated(EnumType.STRING)
+  private TopicStatus status = TopicStatus.UNREPLY;
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
+  @ManyToOne
+  private User author;
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Topic other = (Topic) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
+  @ManyToOne
+  private Course course;
 
-	public Long getId() {
-		return id;
-	}
+  @OneToMany(mappedBy = "topic")
+  private List<Reply> replies = new ArrayList<>();
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  /**
+   * É possível que uma classe tenha mais de um construtor o default e algum outro
+   * com atributos específicos Ao invocar o construtor, é necessário declarar nos
+   * argumentos, quais atributos deseja utilizar
+   */
+  public Topic() {}
 
-	public String getTitle() {
-		return title;
-	}
+  public Topic(String title, String message, Course course) {
+    this.title = title;
+    this.message = message;
+    this.course = course;
+  }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((id == null) ? 0 : id.hashCode());
+    return result;
+  }
 
-	public String getMessage() {
-		return message;
-	}
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (getClass() != obj.getClass()) return false;
+    Topic other = (Topic) obj;
+    if (id == null) {
+      if (other.id != null) return false;
+    } else if (!id.equals(other.id)) return false;
+    return true;
+  }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public LocalDateTime getDateCreation() {
-		return dateCreation;
-	}
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-	public void seDateCreation(LocalDateTime dateCreation) {
-		this.dateCreation = dateCreation;
-	}
+  public String getTitle() {
+    return title;
+  }
 
-	public TopicStatus getStatus() {
-		return status;
-	}
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-	public void setStatus(TopicStatus status) {
-		this.status = status;
-	}
+  public String getMessage() {
+    return message;
+  }
 
-	public User getAuthor() {
-		return author;
-	}
+  public void setMessage(String message) {
+    this.message = message;
+  }
 
-	public void setAuthor(User autor) {
-		this.author = autor;
-	}
+  public LocalDateTime getDateCreation() {
+    return dateCreation;
+  }
 
-	public Course getCourse() {
-		return course;
-	}
+  public void seDateCreation(LocalDateTime dateCreation) {
+    this.dateCreation = dateCreation;
+  }
 
-	public void setCourse(Course course) {
-		this.course = course;
-	}
+  public TopicStatus getStatus() {
+    return status;
+  }
 
-	public List<Reply> getReplies() {
-		return replies;
-	}
+  public void setStatus(TopicStatus status) {
+    this.status = status;
+  }
 
-	public void setReplies(List<Reply> replies) {
-		this.replies = replies;
-	}
+  public User getAuthor() {
+    return author;
+  }
 
+  public void setAuthor(User autor) {
+    this.author = autor;
+  }
+
+  public Course getCourse() {
+    return course;
+  }
+
+  public void setCourse(Course course) {
+    this.course = course;
+  }
+
+  public List<Reply> getReplies() {
+    return replies;
+  }
+
+  public void setReplies(List<Reply> replies) {
+    this.replies = replies;
+  }
 }

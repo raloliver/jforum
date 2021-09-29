@@ -2,20 +2,19 @@ package br.com.raloliver.jforum.config.validation;
 
 public class ErrorFormDto {
 
-    private String field;
-    private String error;
+  private String field;
+  private String error;
 
-    public ErrorFormDto(String field, String error) {
-        this.field = field;
-        this.error = error;
-    }
+  public ErrorFormDto(String field, String error) {
+    this.field = field;
+    this.error = error;
+  }
 
-    public String getField() {
-        return field;
-    }
+  public String getField() {
+    return field;
+  }
 
-    public String getError() {
-        return error;
-    }
-
+  public String getError() {
+    return error;
+  }
 }
