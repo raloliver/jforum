@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class JforumApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(JforumApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(JforumApplication.class, args);
+  }
 }
